@@ -1,6 +1,6 @@
 # Reinforcement Learning Educational Project: Frozen Lake
 
-Ths is an educational project consisting in applying Reinforcement Learning to OpenAI Gym's Frozen Lake environment.
+Ths is an educational project consisting in applying Reinforcement Learning to OpenAI Gym's [Frozen Lake environment](https://gym.openai.com/envs/FrozenLake8x8-v0/).
 
 To train the agent using SARSA, run one of the following:
 
