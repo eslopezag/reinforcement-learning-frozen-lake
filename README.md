@@ -1,4 +1,4 @@
-# Reinforcement Llearning Educational Project: Frozen Lake
+# Reinforcement Learning Educational Project: Frozen Lake
 
 Ths is an educational project consisting in applying Reinforcement Learning to OpenAI Gym's Frozen Lake environment.
 
