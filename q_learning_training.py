@@ -57,14 +57,6 @@ class Agent:
         mode: str = 'training',
     ) -> None:
         self.env = environment
-        self.Q = np.zeros(
-            (self.env.observation_space.n, self.env.action_space.n)
-        )
-        self.greedy_policy = np.random.randint(
-            0,
-            self.env.action_space.n,
-            self.env.observation_space.n,
-        )
         self.eps = eps
         self.discount = discount
 
@@ -77,7 +69,22 @@ class Agent:
 
         self.last_state = None
         self.last_action = None
-        self.terminal_states = set()
+
+        self.terminal_states = [
+            int(np.sqrt(self.env.observation_space.n) * i + j)
+            for i, j in zip(
+                *((self.env.desc == b'H') + (self.env.desc == b'G')).nonzero()
+            )
+        ]
+
+        self.Q = np.full(
+            (self.env.observation_space.n, self.env.action_space.n),
+            0.,
+            dtype='float64',
+        )
+        self.Q[self.terminal_states] = 0
+
+        self.greedy_policy = np.argmax(self.Q, axis=1)
 
         self.history = AgentHistory(
             int(self.env.observation_space.n ** (1/2)),
@@ -113,12 +120,6 @@ class Agent:
 
         action = self.get_action(state)
 
-        if done:
-            self.history.register_episode_end()
-            if state not in self.terminal_states:
-                self.terminal_states.add(state)
-                self.Q[state] = np.zeros(self.env.action_space.n)
-
         if self.last_state is not None and self.last_action is not None:
             self.Q[self.last_state, self.last_action] += step_size * (
                 reward + self.discount * np.max(self.Q[state]) -
@@ -126,6 +127,7 @@ class Agent:
             )
 
         if done:
+            self.history.register_episode_end()
             self.last_state = None
             self.last_action = None
         else:
