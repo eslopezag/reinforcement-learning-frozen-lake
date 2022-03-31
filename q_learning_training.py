@@ -166,7 +166,7 @@ if __name__ == '__main__':
     agent = Agent(
         environment=env,
         eps=1,
-        discount=0.8,
+        discount=1,
     )
 
     observation = env.reset()

@@ -59,7 +59,8 @@ class Agent:
         self.env = environment
         self.Q = np.full(
             (self.env.observation_space.n, self.env.action_space.n),
-            0.1,
+            1.,
+            dtype='float64',
         )
         self.Q[-1] = np.zeros(self.env.action_space.n)
         self.greedy_policy = np.random.randint(
@@ -178,7 +179,7 @@ if __name__ == '__main__':
     agent = Agent(
         environment=env,
         eps=0.3,
-        discount=0.8,
+        discount=1,
     )
 
     observation = env.reset()
@@ -187,10 +188,10 @@ if __name__ == '__main__':
     for step, _ in enumerate(tqdm(range(training_steps))):
         # render = env.render(mode='human')
 
-        initial_learning_rate = 0.04
+        initial_learning_rate = 0.01
 
         # Minimum fraction of initial learning rate reached:
-        min_fraction = 0.002 / initial_learning_rate
+        min_fraction = 0.0005 / initial_learning_rate
 
         cosine_decay = 0.5 * (1 + np.cos(np.pi * step / (training_steps - 1)))
         decayed = (1 - min_fraction) * cosine_decay + min_fraction
