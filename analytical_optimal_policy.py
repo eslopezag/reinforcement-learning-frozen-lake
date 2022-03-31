@@ -75,7 +75,7 @@ class AnalyticalOptimalPolicyFinder():
         next_states = [self.move(i, j, dir) for dir in possible_directions]
         return next_states
 
-    def policy_evaluation(self, policy: List[int]) -> List[float]:
+    def policy_evaluation(self, policy: List[int]) -> np.ndarray:
         # Initialize the matrix and vector that will be used to solve the
         # system of Bellman equations:
         M = np.zeros((self.map_size ** 2, self.map_size ** 2))
