@@ -57,9 +57,11 @@ class Agent:
         mode: str = 'training',
     ) -> None:
         self.env = environment
-        self.Q = np.zeros(
-            (self.env.observation_space.n, self.env.action_space.n)
+        self.Q = np.full(
+            (self.env.observation_space.n, self.env.action_space.n),
+            0.1,
         )
+        self.Q[-1] = np.zeros(self.env.action_space.n)
         self.greedy_policy = np.random.randint(
             0,
             self.env.action_space.n,
@@ -120,8 +122,18 @@ class Agent:
                 self.Q[state] = np.zeros(self.env.action_space.n)
 
         if self.last_state is not None and self.last_action is not None:
+
+            greedy_action = np.argmax(self.Q[state])
+
+            actions_prob = np.zeros(self.env.action_space.n)
+            actions_prob[greedy_action] = 1 - self.eps
+            actions_prob += np.full(
+                self.env.action_space.n,
+                self.eps / self.env.action_space.n,
+            )
+
             self.Q[self.last_state, self.last_action] += step_size * (
-                reward + self.discount * np.max(self.Q[state]) -
+                reward + self.discount * np.dot(actions_prob, self.Q[state]) -
                 self.Q[self.last_state, self.last_action]
             )
 
@@ -165,7 +177,7 @@ if __name__ == '__main__':
 
     agent = Agent(
         environment=env,
-        eps=1,
+        eps=0.3,
         discount=0.8,
     )
 
@@ -199,7 +211,7 @@ if __name__ == '__main__':
     print(agent.Q)
     print(agent.greedy_policy)
 
-    with open('q_learning_agent.dill', 'wb') as fopen:
+    with open('expected_sarsa_agent.dill', 'wb') as fopen:
         dill.dump(agent, fopen)
 
     # fig, ax = plt.subplots(2, 1, figsize=(10, 14))

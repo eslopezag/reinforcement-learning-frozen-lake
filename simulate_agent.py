@@ -6,10 +6,10 @@ from time import sleep
 
 agent_file_path = sys.argv[1]
 
-env = gym.make('FrozenLake-v1', desc=None, map_name="8x8", is_slippery=True)
-
 with open(agent_file_path, 'rb') as fopen:
     agent = dill.load(fopen)
+
+env = agent.env
 
 agent.set_mode('inference')
 
