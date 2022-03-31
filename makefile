@@ -14,4 +14,4 @@ simulate_expected_sarsa:
 simulate_q_learning:
 	python simulate_agent.py "q_learning_agent.dill"
 simulate_random_policy:
-	python simulate_random_policy.py
+	python simulate_random_policy.py $(size)

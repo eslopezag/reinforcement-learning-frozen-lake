@@ -1,7 +1,17 @@
-import gym
 from time import sleep
+import sys
 
-env = gym.make('FrozenLake-v1', desc=None, map_name="8x8", is_slippery=True)
+import gym
+
+
+map_size = sys.argv[1]
+
+if map_size == '4':
+    map_name = '4x4'
+elif map_size == '8':
+    map_name = '8x8'
+
+env = gym.make('FrozenLake-v1', desc=None, map_name=map_name, is_slippery=True)
 
 observation = env.reset()
 for _ in range(100):

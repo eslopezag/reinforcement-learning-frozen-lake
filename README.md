@@ -67,11 +67,11 @@ python simulate_agent.py "q_learning_agent.dill"
 To see a simulation where actions are taken randomly for comparison, run one of the following:
 
 ```shell
-make simulate_random_policy
+make simulate_random_policy size=<GRIDWORLD-SIDE-LENGTH>
 ```
 
 ```shell
-python simulate_random_policy.py
+python simulate_random_policy.py <GRIDWORLD-SIDE-LENGTH>
 ```
 
 
