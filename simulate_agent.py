@@ -1,7 +1,7 @@
 import sys
-import gym
-import dill
 from time import sleep
+
+import dill
 
 
 agent_file_path = sys.argv[1]
