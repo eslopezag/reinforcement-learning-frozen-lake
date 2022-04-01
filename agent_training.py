@@ -1,4 +1,5 @@
-from typing import Callable, List, Optional
+from typing import List, Optional, Union, Callable
+from itertools import chain
 
 import numpy as np
 import gym
@@ -31,6 +32,9 @@ class AgentHistory:
         # is non-optimal:
         self.policy_distances_to_optimal = []
 
+        # Initialize the list that will keep a history of the rewards:
+        self.reward_history = []
+
     def register_Q(self, Q: np.ndarray) -> None:
         V = np.max(Q, axis=1)  # get the state-values assuming greedy policy
         self.V_RMSE.append(
@@ -48,6 +52,9 @@ class AgentHistory:
     def register_episode_end(self):
         self.episode_ends.append(len(self.V_RMSE))
 
+    def register_reward(self, reward: Union[int, float]):
+        self.reward_history.append(reward)
+
 
 class Agent:
     def __init__(
@@ -58,6 +65,7 @@ class Agent:
         discount: float,
         mode: str = 'training',
         eps: Optional[float] = None,
+        output_filename: Optional[str] = None,
     ) -> None:
         if training_alg not in ('q_learning', 'sarsa', 'expected_sarsa'):
             raise ValueError(
@@ -71,6 +79,8 @@ class Agent:
 
         self.eps = eps
         self.discount = discount
+
+        self.output_filename = output_filename
 
         if mode == 'training' or mode == 'inference':
             self.mode = mode
@@ -175,6 +185,7 @@ class Agent:
 
         self.greedy_policy = np.argmax(self.Q, axis=1)
 
+        self.history.register_reward(reward)
         self.history.register_Q(self.Q)
         self.history.register_policy(self.greedy_policy)
 
@@ -226,23 +237,44 @@ class Agent:
         print(self.Q)
         print(self.greedy_policy)
 
-        with open(f'{self.training_alg}_agent.dill', 'wb') as fopen:
+        if not self.output_filename:
+            self.output_filename = self.training_alg + '_agent'
+        with open(f'{self.output_filename}.dill', 'wb') as fopen:
             dill.dump(self, fopen)
 
-        fig, ax = plt.subplots(2, 1, figsize=(10, 14))
+        fig, ax = plt.subplots(3, 1, figsize=(10, 21))
 
         ax[0].set_xlabel('Episode')
         ax[0].set_ylabel('Number of states where policy is non-optimal')
-        ax[0].plot([
+        episode_policy_distances_to_optimal = [
             self.history.policy_distances_to_optimal[i - 1]
             for i in self.history.episode_ends
-        ])
+        ]
+        ax[0].plot(
+            range(1, len(episode_policy_distances_to_optimal) + 1),
+            episode_policy_distances_to_optimal,
+        )
 
         ax[1].set_xlabel('Episode')
         ax[1].set_ylabel('RMSE of the estimated state-values')
-        ax[1].plot([
-            self.history.V_RMSE[i - 1]
-            for i in self.history.episode_ends
-        ])
+        episode_V_RMSE = [
+            self.history.V_RMSE[i - 1] for i in self.history.episode_ends
+        ]
+        ax[1].plot(range(1, len(episode_V_RMSE) + 1), episode_V_RMSE)
+
+        ax[2].set_xlabel('Episode')
+        ax[2].set_ylabel(
+            'Running average of episode reward (window size = 100)'
+        )
+        episode_rewards = [
+            sum(self.history.reward_history[i:j])
+            for i, j in zip(
+                chain([0], self.history.episode_ends),
+                self.history.episode_ends,
+            )
+        ]
+        cumsum = np.cumsum(np.insert(episode_rewards, 0, 0))
+        running_avg = (cumsum[100:] - cumsum[:-100]) / 100
+        ax[2].plot(range(100, len(running_avg) + 100), running_avg)
 
         plt.show(block=True)

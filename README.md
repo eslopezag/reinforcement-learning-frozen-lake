@@ -24,7 +24,7 @@ make train_expected_sarsa size=<GRIDWORLD-SIDE-LENGTH> steps=<NUMBER-OF-STEPS>
 python expected_sarsa_training.py <GRIDWORLD-SIDE-LENGTH> <NUMBER-OF-STEPS>
 ```
 
-To train the agent using Q-learning, run one of the following:
+To train the agent using Q-learning with fully exploratory behavior, run one of the following:
 
 ```shell
 make train_q_learning size=<GRIDWORLD-SIDE-LENGTH> steps=<NUMBER-OF-STEPS>
@@ -32,6 +32,16 @@ make train_q_learning size=<GRIDWORLD-SIDE-LENGTH> steps=<NUMBER-OF-STEPS>
 
 ```shell
 python q_learning_training.py <GRIDWORLD-SIDE-LENGTH> <NUMBER-OF-STEPS>
+```
+
+To train the agent using Q-learning with epsilon-greedy behavior policy, run one of the following:
+
+```shell
+make train_q_learning_eps size=<GRIDWORLD-SIDE-LENGTH> steps=<NUMBER-OF-STEPS>
+```
+
+```shell
+python q_learning_eps_training.py <GRIDWORLD-SIDE-LENGTH> <NUMBER-OF-STEPS>
 ```
 
 To see a simulation where actions are taken by the agent trained with SARSA, run one of the following:
@@ -54,7 +64,7 @@ make simulate_expected_sarsa
 python simulate_agent.py "expected_sarsa_agent.dill"
 ```
 
-To see a simulation where actions are taken by the agent trained with Q-learning, run one of the following:
+To see a simulation where actions are taken by the agent trained with Q-learning with fully exploratory behavior, run one of the following:
 
 ```shell
 make simulate_q_learning
@@ -62,6 +72,16 @@ make simulate_q_learning
 
 ```shell
 python simulate_agent.py "q_learning_agent.dill"
+```
+
+To see a simulation where actions are taken by the agent trained with Q-learning with epsilon-greedy behavior policy, run one of the following:
+
+```shell
+make simulate_q_learning_eps
+```
+
+```shell
+python simulate_agent.py "q_learning_eps_agent.dill"
 ```
 
 To see a simulation where actions are taken randomly for comparison, run one of the following:
