@@ -29,7 +29,8 @@ if __name__ == '__main__':
     agent = Agent(
         training_alg='q_learning',
         environment=env,
-        initial_fill_value=0.,
+        initial_Q_mean=0.2,
+        initial_Q_std=0.05,
         discount=1.,
         eps=1,
     )

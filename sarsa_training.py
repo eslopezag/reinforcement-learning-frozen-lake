@@ -29,7 +29,8 @@ if __name__ == '__main__':
     agent = Agent(
         training_alg='sarsa',
         environment=env,
-        initial_fill_value=1.,
+        initial_Q_mean=0.8,
+        initial_Q_std=0.05,
         discount=1.,
     )
 

@@ -61,8 +61,9 @@ class Agent:
         self,
         training_alg: str,
         environment: gym.Env,
-        initial_fill_value: float,
-        discount: float,
+        initial_Q_mean: float,
+        initial_Q_std: float = 0.,
+        discount: float = 1.,
         mode: str = 'training',
         eps: Optional[float] = None,
         output_filename: Optional[str] = None,
@@ -99,10 +100,10 @@ class Agent:
             )
         ]
 
-        self.Q = np.full(
-            (self.env.observation_space.n, self.env.action_space.n),
-            initial_fill_value,
-            dtype='float64',
+        self.Q = np.random.normal(
+            loc=initial_Q_mean,
+            scale=initial_Q_std,
+            size=(self.env.observation_space.n, self.env.action_space.n),
         )
         self.Q[self.terminal_states] = 0
 

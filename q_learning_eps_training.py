@@ -29,7 +29,8 @@ if __name__ == '__main__':
     agent = Agent(
         training_alg='q_learning',
         environment=env,
-        initial_fill_value=0.,
+        initial_Q_mean=0.2,
+        initial_Q_std=0.05,
         discount=1.,
         output_filename='q_learning_eps_agent'
     )
@@ -43,7 +44,7 @@ if __name__ == '__main__':
         ),
         epsilon_scheduler=cosine_decay_scheduler(
             1,
-            0,
-            training_steps // 3
+            0.4,
+            training_steps
         ),
     )
