@@ -5,9 +5,9 @@ import numpy as np
 from matplotlib import pyplot as plt
 import gym
 
-from q_approximators import TabularQApproximator
+from rl_agents.q_approximators import TabularQApproximator
+from rl_agents.agent_history import TabularAgentHistory
 from analytical_optimal_policy import AnalyticalOptimalPolicyFinder
-from agent_history import TabularAgentHistory
 
 
 class CustomAgentHistory(TabularAgentHistory):

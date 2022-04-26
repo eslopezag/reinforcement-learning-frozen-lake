@@ -1,5 +1,5 @@
 from frozen_lake_agents import get_frozen_lake_agent
-from schedulers import cosine_decay_scheduler
+from rl_agents.schedulers import cosine_decay_scheduler
 
 
 if __name__ == '__main__':

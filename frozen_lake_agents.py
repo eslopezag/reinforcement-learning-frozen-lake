@@ -3,14 +3,14 @@ from typing import Callable
 import numpy as np
 import gym
 
-from q_approximators import TabularQApproximator
-from policies import EpsGreedyPolicy, SoftmaxPolicy
-from schedulers import (
+from rl_agents.q_approximators import TabularQApproximator
+from rl_agents.policies import EpsGreedyPolicy, SoftmaxPolicy
+from rl_agents.schedulers import (
     cosine_decay_scheduler,
     exp_decay_scheduler,
     constant_scheduler,
 )
-from agents import (
+from rl_agents.agents import (
     TabularSarsaAgent,
     TabularQLearningAgent,
     TabularExpectedSarsaAgent
