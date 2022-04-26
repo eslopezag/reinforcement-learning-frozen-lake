@@ -106,7 +106,7 @@ def get_frozen_lake_agent(
             ),
             exploration_policy=SoftmaxPolicy(
                 scheduler=exp_decay_scheduler(
-                    10, 0.1, training_steps
+                    10, 0.02, training_steps
                 ),
             ),
             discount=discount,
