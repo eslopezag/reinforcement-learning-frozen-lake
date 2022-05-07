@@ -10,12 +10,12 @@ train_q_learning:
 train_q_learning_eps:
 	python q_learning_eps_training.py $(size) $(steps)
 simulate_sarsa:
-	python simulate_agent.py "sarsa_agent.dill"
+	python simulate_agent.py "saved_agents/sarsa_agent"
 simulate_expected_sarsa:
-	python simulate_agent.py "expected_sarsa_agent.dill"
+	python simulate_agent.py "saved_agents/expected_sarsa_agent"
 simulate_q_learning:
-	python simulate_agent.py "q_learning_agent.dill"
+	python simulate_agent.py "saved_agents/q_learning_agent"
 simulate_q_learning_eps:
-	python simulate_agent.py "q_learning_eps_agent.dill"
+	python simulate_agent.py "saved_agents/q_learning_eps_agent"
 simulate_random_policy:
 	python simulate_random_policy.py $(size)

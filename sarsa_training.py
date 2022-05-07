@@ -23,4 +23,5 @@ if __name__ == '__main__':
     )
 
     agent.train(training_steps)
+    agent.save('saved_agents/sarsa_agent')
     agent.show_training_results()

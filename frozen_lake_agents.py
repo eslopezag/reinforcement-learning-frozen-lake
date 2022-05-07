@@ -69,7 +69,6 @@ def get_frozen_lake_agent(
                 scheduler=cosine_decay_scheduler(0.3, 1e-6, training_steps),
             ),
             discount=discount,
-            output_filename='sarsa_agent',
         )
 
     elif name == 'q_learning':
@@ -79,7 +78,6 @@ def get_frozen_lake_agent(
             history=CustomAgentHistory(discount, env=env),
             exploration_policy=EpsGreedyPolicy(eps=1.),
             discount=discount,
-            output_filename='q_learning_agent',
         )
 
     elif name == 'q_learning_eps':
@@ -91,7 +89,6 @@ def get_frozen_lake_agent(
                 scheduler=cosine_decay_scheduler(1, 0.4, training_steps)
             ),
             discount=discount,
-            output_filename='q_learning_eps_agent',
         )
 
     elif name == 'expected_sarsa':
@@ -110,7 +107,6 @@ def get_frozen_lake_agent(
                 ),
             ),
             discount=discount,
-            output_filename='expected_sarsa_agent',
         )
 
     return agent

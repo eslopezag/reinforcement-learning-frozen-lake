@@ -1,13 +1,12 @@
 import sys
 from time import sleep
 
-import dill
+from rl_agents.agents import load_agent
 
 
-agent_file_path = sys.argv[1]
+agent_folder_path = sys.argv[1]
 
-with open(agent_file_path, 'rb') as fopen:
-    agent = dill.load(fopen)
+agent = load_agent(agent_folder_path)
 
 env = agent.env
 

@@ -51,17 +51,17 @@ make simulate_sarsa
 ```
 
 ```shell
-python simulate_agent.py "sarsa_agent.dill"
+python simulate_agent.py "saved_agents/sarsa_agent"
 ```
 
-To see a simulation where actions are taken by the agent trained with Exptected SARSA, run one of the following:
+To see a simulation where actions are taken by the agent trained with Expected SARSA, run one of the following:
 
 ```shell
 make simulate_expected_sarsa
 ```
 
 ```shell
-python simulate_agent.py "expected_sarsa_agent.dill"
+python simulate_agent.py "saved_agents/expected_sarsa_agent"
 ```
 
 To see a simulation where actions are taken by the agent trained with Q-learning with fully exploratory behavior, run one of the following:
@@ -71,7 +71,7 @@ make simulate_q_learning
 ```
 
 ```shell
-python simulate_agent.py "q_learning_agent.dill"
+python simulate_agent.py "saved_agents/q_learning_agent"
 ```
 
 To see a simulation where actions are taken by the agent trained with Q-learning with epsilon-greedy behavior policy, run one of the following:
@@ -81,7 +81,7 @@ make simulate_q_learning_eps
 ```
 
 ```shell
-python simulate_agent.py "q_learning_eps_agent.dill"
+python simulate_agent.py "saved_agents/q_learning_eps_agent"
 ```
 
 To see a simulation where actions are taken randomly for comparison, run one of the following:
